@@ -15,18 +15,36 @@ export default function Home() {
 
           <div className="hidden lg:flex flex-col justify-between gap-4">
             <div className="relative w-full h-[142px] rounded-lg overflow-hidden shadow-sm">
-              <Image src="https://placehold.co/400x142/ffe4e1/000000?text=Static+Banner" alt="Banner 1" fill className="object-cover" unoptimized/>
+              <Image
+                src="/images/top_side_banner_1.jpg"
+                alt="Promotional banner"
+                fill
+                sizes="(max-width: 1400px) 33vw, 400px"
+                className="object-cover"
+              />
             </div>
             <div className="relative w-full h-[142px] rounded-lg overflow-hidden shadow-sm">
-              <Image src="https://placehold.co/400x142/ffe4e1/000000?text=Static+Banner" alt="Banner 2" fill className="object-cover" unoptimized/>
+              <Image
+                src="/images/top_side_banner_2.jpg"
+                alt="Promotional banner"
+                fill
+                sizes="(max-width: 1400px) 33vw, 400px"
+                className="object-cover"
+              />
             </div>
           </div>
         </section>
 
         <section className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start relative">
           
-          <div className="hidden lg:block sticky top-8 rounded-lg overflow-hidden shadow-sm h-[600px] relative">
-             <Image src="https://placehold.co/300x600/e6f2ff/000000?text=Static+Image" alt="Left Static" fill className="object-cover" unoptimized/>
+          <div className="hidden lg:block sticky top-8 rounded-lg overflow-hidden shadow-sm h-[600px]">
+            <Image
+              src="/images/side_sticky_banner.jpg"
+              alt="Side banner"
+              fill
+              sizes="300px"
+              className="object-cover"
+            />
           </div>
 
           <div className="col-span-1 lg:col-span-2 space-y-6">
@@ -35,8 +53,14 @@ export default function Home() {
 
           </div>
 
-          <div className="hidden lg:block sticky top-8 rounded-lg overflow-hidden shadow-sm h-[600px] relative">
-             <Image src="https://placehold.co/300x600/e6f2ff/000000?text=Static+Image" alt="Right Static" fill className="object-cover" unoptimized/>
+          <div className="hidden lg:block sticky top-8 rounded-lg overflow-hidden shadow-sm h-[600px]">
+            <Image
+              src="/images/side_sticky_banner.jpg"
+              alt="Side banner"
+              fill
+              sizes="300px"
+              className="object-cover"
+            />
           </div>
 
         </section>

@@ -13,6 +13,13 @@ import {
 const AUTOPLAY_DELAY_MS = 4000;
 const RESUME_AFTER_MANUAL_MS = 4000;
 
+const CAROUSEL_IMAGES = [
+  "/images/carousel_1.jpg",
+  "/images/carousel_2.jpg",
+  "/images/carousel_3.jpg",
+  "/images/carousel_4.jpg",
+] as const;
+
 export default function HeroCarousel() {
   const plugin = React.useRef(
     Autoplay({
@@ -75,16 +82,16 @@ export default function HeroCarousel() {
       }}
     >
       <CarouselContent>
-        {[1, 2, 3, 4].map((index) => (
-          <CarouselItem key={index}>
+        {CAROUSEL_IMAGES.map((src, i) => (
+          <CarouselItem key={src}>
             <div className="relative w-full h-[200px] md:h-[300px]">
               <Image
-                src={`https://placehold.co/800x300/ffe4e1/000000?text=CAROUSEL+BANNER+${index}`}
-                alt={`Carousel Banner ${index}`}
+                src={src}
+                alt={`Carousel banner ${i + 1}`}
                 fill
-                priority={index === 1}
+                sizes="(max-width: 1024px) 100vw, 66vw"
+                priority={i === 0}
                 className="object-cover"
-                unoptimized
               />
             </div>
           </CarouselItem>
