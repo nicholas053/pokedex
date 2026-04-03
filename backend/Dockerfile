@@ -22,6 +22,9 @@ RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Set working directory
 WORKDIR /var/www/html
 
@@ -37,5 +40,8 @@ RUN mkdir -p database && touch database/database.sqlite
 # Set correct permissions so Apache can read/write the cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
-# Tell Render to map traffic to Apache's default port
-EXPOSE 80
+# Render sets PORT at runtime; EXPOSE is informational only.
+EXPOSE 10000
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["apache2-foreground"]
