@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import useSWRInfinite from "swr/infinite";
 import { useInView } from "react-intersection-observer";
-import { ChevronDown, X } from "lucide-react";
+import { ArrowUp, ChevronDown, X } from "lucide-react";
 import PokemonCard from "./PokemonCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,8 @@ interface Pokemon {
   types: string[];
 }
 
+const SCROLL_TOP_BUTTON_THRESHOLD_PX = 400;
+
 function formatTypeLabel(slug: string) {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
@@ -25,6 +27,7 @@ export default function PokemonList() {
   const [search, setSearch] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [typesMenuOpen, setTypesMenuOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const typesMenuRef = useRef<HTMLDivElement>(null);
   const { ref, inView } = useInView();
 
@@ -74,6 +77,15 @@ export default function PokemonList() {
     }
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, []);
+
+  useEffect(() => {
+    function updateScrollTopVisibility() {
+      setShowScrollTop(window.scrollY > SCROLL_TOP_BUTTON_THRESHOLD_PX);
+    }
+    updateScrollTopVisibility();
+    window.addEventListener("scroll", updateScrollTopVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollTopVisibility);
   }, []);
 
   const toggleType = (slug: string) => {
@@ -213,6 +225,23 @@ export default function PokemonList() {
           <p className="text-gray-500">No Pokémon found.</p>
         )}
       </div>
+
+      <Button
+        type="button"
+        variant="default"
+        size="icon"
+        aria-label="Scroll to top of page"
+        tabIndex={showScrollTop ? 0 : -1}
+        className={cn(
+          "fixed bottom-6 right-6 z-40 size-11 rounded-full shadow-md transition-[opacity,transform] duration-200",
+          showScrollTop
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-2 opacity-0"
+        )}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        <ArrowUp className="size-5" />
+      </Button>
     </div>
   );
 }
